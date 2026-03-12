@@ -1,8 +1,7 @@
 name = "cussy-tourism"
 compatibility_date = "2024-03-20"
 compatibility_flags = ["nodejs_compat"]
-[pages_build_output_dir]
-directory = "dist"
+pages_build_output_dir = "dist"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
