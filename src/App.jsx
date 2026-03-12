@@ -10,6 +10,7 @@ const App = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeFilter, setActiveFilter] = useState('all');
   const [wishlist, setWishlist] = useState({});
+  const [imageError, setImageError] = useState(false);
 
   // Slides data
   const slides = [
@@ -104,9 +105,21 @@ const App = () => {
       {/* NAVBAR */}
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="container">
-          <a href="#" className="nav-brand">
-            <div className="brand-icon">CT</div>
-            Cussy<span>Tourism</span>
+          <a href="#" className="nav-logo-link">
+            {!imageError && (
+              <img 
+                src="/images/logo.png" 
+                alt="Cussy Tourism Logo" 
+                className="nav-logo-img"
+                onError={() => setImageError(true)} 
+              />
+            )}
+            {imageError && (
+              <div className="fallback-logo">
+                <div className="brand-icon">CT</div>
+                Cussy<span>Tourism</span>
+              </div>
+            )}
           </a>
           <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
             <a href="#destinations" onClick={() => setMenuOpen(false)}>Destinations</a>
