@@ -100,7 +100,8 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 .nav-cta::after { display: none !important; }
 
 .hamburger { display: none; flex-direction: column; gap: 6px; background: none; z-index: 1001; }
-.hamburger span { width: 28px; height: 3px; background: var(--clr-primary); border-radius: 3px; transition: var(--transition-base); }
+.hamburger span { width: 28px; height: 3px; background: white; border-radius: 3px; transition: var(--transition-base); }
+.navbar.scrolled .hamburger span { background: var(--clr-primary); }
 .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
@@ -273,9 +274,8 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 .back-to-top.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
 .back-to-top:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,102,178,0.4); background: var(--clr-primary-light); }
 
-/* RESPONSIVE */
 @media (max-width: 1024px) {
-  .destinations-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: 300px 300px 300px; }
+  .destinations-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: 280px 280px 280px; }
   .destination-card:first-child { grid-row: span 1; grid-column: span 2; }
   .features-grid, .experiences-grid, .stats-inner, .testimonials-track, .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-inner { padding: var(--space-3xl); }
@@ -284,12 +284,15 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 @media (max-width: 768px) {
   :root { --nav-height: 70px; }
   .hamburger { display: flex; }
-  .nav-links { position: fixed; top: 0; right: -100%; width: 80%; max-width: 360px; height: 100vh; background: #ffffff; flex-direction: column; align-items: flex-start; padding: calc(var(--nav-height) + var(--space-2xl)) var(--space-2xl); gap: var(--space-lg); border-left: 1px solid var(--clr-border); transition: var(--transition-base); box-shadow: -10px 0 40px rgba(0,0,0,0.1); }
+  .navbar { top: 0; width: 100%; max-width: 100%; border-radius: 0; }
+  .nav-links { position: fixed; top: 0; right: -100%; width: 85%; max-width: 380px; height: 100vh; background: #ffffff; flex-direction: column; align-items: flex-start; padding: calc(var(--nav-height) + var(--space-2xl)) var(--space-2xl); gap: var(--space-lg); border-left: 1px solid var(--clr-border); transition: var(--transition-base); box-shadow: -10px 0 40px rgba(0,0,0,0.1); }
   .nav-links.open { right: 0; }
-  .nav-links a { font-size: 1.1rem; color: var(--clr-text-muted) !important; }
+  .nav-links a { font-size: 1.15rem; color: var(--clr-text-muted) !important; text-shadow: none; font-weight: 800; border-bottom: 1px solid var(--clr-border); width: 100%; padding-bottom: 12px; }
+  .nav-cta { margin-top: var(--space-md); width: 100%; text-align: center; }
   .destinations-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .destination-card:first-child, .destination-card, .experience-card { height: 280px; grid-column: span 1; }
+  .destination-card:first-child, .destination-card, .experience-card { height: 320px; grid-column: span 1; }
   .features-grid, .packages-grid, .experiences-grid, .testimonials-track { grid-template-columns: 1fr; }
+  .destinations, .features, .packages, .experiences, .testimonials, .cta-section { padding: var(--space-3xl) 0; }
   .stats-inner { grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); padding: var(--space-2xl); }
   .hero-stats { gap: var(--space-xl); flex-wrap: wrap; }
   .hero h1 { font-size: clamp(2.5rem, 8vw, 3.5rem); }
@@ -300,7 +303,9 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
 }
 
 @media (max-width: 480px) {
-  .container { padding-inline: var(--space-md); }
+  .container { padding-inline: var(--space-lg); }
+  .hero { align-items: flex-start; padding-top: calc(var(--nav-height) + 2rem); }
+  .nav-logo-img { height: 35px; }
   .hero-stats { gap: var(--space-lg); }
   .hero-stat h3 { font-size: 2rem; }
   .stat-item h3 { font-size: 2.5rem; }
