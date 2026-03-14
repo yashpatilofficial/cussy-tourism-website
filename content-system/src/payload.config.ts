@@ -37,7 +37,7 @@ export default buildConfig({
   db: isBuild 
     ? sqliteAdapter({
         client: {
-          url: 'file:./build.db',
+          url: 'libsql://internal-special-temp.db',
         },
       })
     : postgresAdapter({
