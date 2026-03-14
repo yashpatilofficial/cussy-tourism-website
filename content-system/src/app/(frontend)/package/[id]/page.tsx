@@ -15,7 +15,7 @@ export default async function PackageDetailPage({ params }: { params: { id: stri
   const { id } = params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
+  const isBuild = process.env.NEXT_PHASE === 'phase-production-build' || process.env.VERCEL === '1'
 
   let packages: any[] = []
 
