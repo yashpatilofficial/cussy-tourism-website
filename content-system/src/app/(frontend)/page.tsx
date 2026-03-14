@@ -11,16 +11,24 @@ export default async function HomePage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   
-  // Fetch packages from Payload CMS
-  const { docs: packages } = await payload.find({
-    collection: 'packages',
-    limit: 100,
-  })
+  let packages: any[] = []
+  let homepage: any = null
 
-  // Fetch homepage settings
-  const homepage = await payload.findGlobal({
-    slug: 'homepage',
-  })
+  try {
+    // Fetch packages from Payload CMS
+    const packagesRes = await payload.find({
+      collection: 'packages',
+      limit: 100,
+    })
+    packages = packagesRes.docs
+
+    // Fetch homepage settings
+    homepage = await payload.findGlobal({
+      slug: 'homepage',
+    })
+  } catch (error) {
+    console.error('Build Error: Database table probably does not exist yet.', error)
+  }
 
   return <HomeClient initialPackages={packages} homepage={homepage} />
 }
