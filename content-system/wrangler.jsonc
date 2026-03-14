@@ -19,12 +19,6 @@
       "remote": true
     }
   ],
-  "r2_buckets": [
-    {
-      "binding": "R2",
-      "bucket_name": "cussy-tourism-media"
-    }
-  ],
   "env": {
     "development": {
       "name": "cussy-tourism-dev",
@@ -34,12 +28,6 @@
           "database_id": "fd49d8be-5cba-44fa-8248-bc9bda4baccd",
           "database_name": "cussy-tourism-db",
           "remote": true
-        }
-      ],
-       "r2_buckets": [
-        {
-          "binding": "R2",
-          "bucket_name": "cussy-tourism-media"
         }
       ]
     }
