@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<any[]> {
   return []
 }
 

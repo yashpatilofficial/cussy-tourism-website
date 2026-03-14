@@ -9,6 +9,8 @@ import { Media } from './collections/Media'
 import { Packages } from './collections/Packages'
 import { Homepage } from './globals/Homepage'
 
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -31,4 +33,13 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || process.env.POSTGRES_URL || '',
     },
   }),
+  plugins: [
+    vercelBlobStorage({
+      enabled: true, // Only enable if we have a token
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
 })
