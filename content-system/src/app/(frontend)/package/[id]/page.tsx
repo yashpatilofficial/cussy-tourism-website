@@ -4,8 +4,18 @@ import config from '@/payload.config'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-// Removing generateStaticParams to allow build to succeed without DB access
-// Pages will be rendered on-demand in production
+export async function generateStaticParams() {
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const { docs: packages } = await payload.find({
+    collection: 'packages',
+    limit: 100,
+  })
+
+  return packages.map((pkg) => ({
+    id: pkg.pid || pkg.id.toString(),
+  }))
+}
 
 export default async function PackageDetailPage({ params }: { params: { id: string } }) {
   const { id } = params
