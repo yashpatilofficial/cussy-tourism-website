@@ -11,7 +11,7 @@ export default async function HomePage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   
-  const isBuild = process.env.NEXT_PHASE === 'phase-production-build' || process.env.VERCEL === '1'
+  const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
   let packages: any[] = []
   let homepage: any = null
 
