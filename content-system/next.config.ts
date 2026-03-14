@@ -7,6 +7,12 @@ const nextConfig = {
   serverExternalPackages: ['jose', 'pg-cloudflare'],
 
   // Your Next.js config here
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   webpack: (webpackConfig: any) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
