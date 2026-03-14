@@ -44,7 +44,7 @@ const cloudflareLogger = {
 const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
 
 const cloudflare =
-  isCLI || !isProduction || isBuild
+  isCLI || (!isProduction && !isBuild)
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 

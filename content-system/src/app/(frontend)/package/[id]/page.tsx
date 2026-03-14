@@ -4,23 +4,8 @@ import config from '@/payload.config'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export async function generateStaticParams() {
-  try {
-    const payloadConfig = await config
-    const payload = await getPayload({ config: payloadConfig })
-    const { docs: packages } = await payload.find({
-      collection: 'packages',
-      limit: 100,
-    })
-
-    return packages.map((pkg) => ({
-      id: pkg.pid || pkg.id.toString(),
-    }))
-  } catch (error) {
-    console.error('Failed to generate static params (Database might be inaccessible during build):', error)
-    return []
-  }
-}
+// Removing generateStaticParams to allow build to succeed without DB access
+// Pages will be rendered on-demand in production
 
 export default async function PackageDetailPage({ params }: { params: { id: string } }) {
   const { id } = params
