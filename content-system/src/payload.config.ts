@@ -11,13 +11,16 @@ import { Homepage } from './globals/Homepage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
 
 export default buildConfig({
-  admin: {
+  admin: !isBuild ? {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+  } : {
+    disable: true,
   },
   collections: [Users, Media, Packages],
   globals: [Homepage],
