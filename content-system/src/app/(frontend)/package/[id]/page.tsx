@@ -4,6 +4,19 @@ import config from '@/payload.config'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+export async function generateStaticParams() {
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const { docs: packages } = await payload.find({
+    collection: 'packages',
+    limit: 100,
+  })
+
+  return packages.map((pkg) => ({
+    id: pkg.pid || pkg.id.toString(),
+  }))
+}
+
 export default async function PackageDetailPage({ params }: { params: { id: string } }) {
   const { id } = params
   const payloadConfig = await config
