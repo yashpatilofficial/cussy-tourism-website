@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Packages } from './collections/Packages'
+import { Subscribers } from './collections/Subscribers'
 import { Homepage } from './globals/Homepage'
 
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
@@ -21,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Packages],
+  collections: [Users, Media, Packages, Subscribers],
   globals: [Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

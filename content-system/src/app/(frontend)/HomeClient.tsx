@@ -148,10 +148,32 @@ export default function HomeClient({ initialPackages, homepage }: { initialPacka
     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }))
   }
 
-  const handleNewsletter = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleNewsletter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    alert("Thanks for subscribing! We'll send you our best deals soon.")
-    ;(e.target as HTMLFormElement).reset()
+    const form = e.target as HTMLFormElement
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value
+
+    try {
+      const response = await fetch('/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+
+      if (response.ok) {
+        alert("Thanks for subscribing! We'll send you our best deals soon.")
+        form.reset()
+      } else {
+        const data = await response.json()
+        if (data.errors?.[0]?.message?.includes('unique')) {
+          alert("You're already subscribed! Stay tuned.")
+        } else {
+          alert("Something went wrong. Please try again.")
+        }
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again.")
+    }
   }
 
   return (
@@ -548,7 +570,7 @@ export default function HomeClient({ initialPackages, homepage }: { initialPacka
               {ctaDescription}
             </p>
             <form className="cta-form" onSubmit={handleNewsletter}>
-              <input type="email" placeholder="Enter your email address" required />
+              <input type="email" name="email" placeholder="Enter your email address" required />
               <button type="submit" className="btn btn-primary">
                 Subscribe
               </button>
