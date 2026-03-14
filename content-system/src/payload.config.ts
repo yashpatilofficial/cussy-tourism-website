@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -59,9 +60,15 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteD1Adapter({
-    binding: cloudflare.env.D1,
-  }),
+  db: process.env.DATABASE_URI
+    ? postgresAdapter({
+        pool: {
+          connectionString: process.env.DATABASE_URI,
+        },
+      })
+    : sqliteD1Adapter({
+        binding: cloudflare.env.D1,
+      }),
   logger: isProduction ? cloudflareLogger : undefined,
   plugins: [],
 })
