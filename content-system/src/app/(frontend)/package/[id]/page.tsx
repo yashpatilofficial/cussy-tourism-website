@@ -8,36 +8,32 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function generateStaticParams() {
-  try {
-    const payloadConfig = await config
-    const payload = await getPayload({ config: payloadConfig })
-    const { docs: packages } = await payload.find({
-      collection: 'packages',
-      limit: 100,
-    })
-
-    return packages.map((pkg) => ({
-      id: pkg.pid || pkg.id.toString(),
-    }))
-  } catch (error) {
-    console.error('Build Error: Packages table probably does not exist yet. Skipping static params.', error)
-    return []
-  }
+  return []
 }
 
 export default async function PackageDetailPage({ params }: { params: { id: string } }) {
   const { id } = params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
+  const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
 
-  const { docs: packages } = await payload.find({
-    collection: 'packages',
-    where: {
-      pid: {
-        equals: id,
-      },
-    },
-  })
+  let packages: any[] = []
+
+  if (!isBuild) {
+    try {
+      const packagesRes = await payload.find({
+        collection: 'packages',
+        where: {
+          pid: {
+            equals: id,
+          },
+        },
+      })
+      packages = packagesRes.docs
+    } catch (error) {
+      console.error('Package fetch failed:', error)
+    }
+  }
 
   if (packages.length === 0) {
     return notFound()
