@@ -37,7 +37,7 @@ export default buildConfig({
   db: isBuild 
     ? sqliteAdapter({
         client: {
-          url: 'libsql://internal-special-temp.db',
+          url: 'file::memory:?cache=shared',
         },
       })
     : postgresAdapter({
