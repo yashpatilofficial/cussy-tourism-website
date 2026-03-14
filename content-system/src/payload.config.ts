@@ -49,11 +49,13 @@ const cloudflare =
     : await getCloudflareContext({ async: true })
 
 export default buildConfig({
-  admin: {
+  admin: !isBuild ? {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+  } : {
+    disable: true,
   },
   collections: [Users, Media, Packages],
   globals: [Homepage],
@@ -81,7 +83,7 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: isProduction,
+        remoteBindings: isProduction && !isBuild,
       } satisfies GetPlatformProxyOptions),
   )
 }
