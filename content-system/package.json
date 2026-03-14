@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "db:push": "cross-env NODE_ENV=production payload migrate",
     "deploy": "echo 'Deploy handled by Vercel'",
     "deploy:app": "opennextjs-cloudflare build --env=$CLOUDFLARE_ENV && opennextjs-cloudflare deploy --env=$CLOUDFLARE_ENV",
     "deploy:database": "cross-env NODE_ENV=production PAYLOAD_SECRET=ignore payload migrate && wrangler d1 execute D1 --command 'PRAGMA optimize' --env=$CLOUDFLARE_ENV --remote",
