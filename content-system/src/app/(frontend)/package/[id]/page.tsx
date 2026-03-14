@@ -4,6 +4,9 @@ import config from '@/payload.config'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function generateStaticParams() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })

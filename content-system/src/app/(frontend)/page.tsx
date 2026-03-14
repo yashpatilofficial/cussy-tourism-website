@@ -4,6 +4,9 @@ import config from '@/payload.config'
 import HomeClient from './HomeClient'
 import './styles.css'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function HomePage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
